@@ -48,6 +48,7 @@ import com.android.settings.applications.AppDashboardFragment;
 import com.android.settings.applications.AppStorageSettings;
 import com.android.settings.applications.ProcessStatsSummary;
 import com.android.settings.applications.ProcessStatsUi;
+import com.android.settings.applications.RunningServices;
 import com.android.settings.applications.UsageAccessDetails;
 import com.android.settings.applications.appcompat.UserAspectRatioDetails;
 import com.android.settings.applications.appinfo.AlarmsAndRemindersDetails;
@@ -431,6 +432,7 @@ public class SettingsGateway {
             PrivateDnsSettings.class.getName(),
             VolumeStepsSettings.class.getName(),
             SmartPixels.class.getName(),
+            RunningServices.class.getName(),
             PersonalizationsFragment.class.getName(),
             LockScreen.class.getName(),
             Themes.class.getName(),
@@ -493,6 +495,7 @@ public class SettingsGateway {
             Settings.NavigationModeSettingsActivity.class.getName(),
             Settings.PrivateDnsSettingsActivity.class.getName(),
             Settings.SmartPixelsActivity.class.getName(),
+            Settings.DevRunningServicesActivity.class.getName(),
             Settings.PersonalizationsActivity.class.getName(),
             Settings.PersonalizationsLockscreenActivity.class.getName(),
             Settings.PersonalizationsToolboxActivity.class.getName(),
