@@ -103,7 +103,13 @@
             android:fragment="com.android.settings.display.ScreenTimeoutSettings"
             settings:controller="com.android.settings.display.ScreenTimeoutPreferenceController"/>
 
-        <org.evolution.settings.preferences.DeviceConfigSwitchPreference
+        <com.android.settings.preferences.SystemSettingSwitchPreference
+            android:key="pocket_judge"
+            android:title="@string/proximity_wake_title"
+            android:summary="@string/proximity_wake_summary"
+            settings:requiresConfig="@*android:bool/config_pocketModeSupported" />
+
+        <com.android.settings.preferences.DeviceConfigSwitchPreference
             android:key="flip_to_screen_off"
             android:title="@string/face_down_sleep_title"
             android:summary="@string/face_down_sleep_summary"
