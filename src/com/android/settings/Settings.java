@@ -525,6 +525,8 @@ public class Settings extends SettingsActivity {
 
     public static class PrivateDnsSettingsActivity extends SettingsActivity { /* empty */ }
 
+    public static class SmartPixelsActivity extends SettingsActivity {}
+
     /** Personalizations Activities **/
     public static class PersonalizationsActivity extends SettingsActivity {}
     public static class PersonalizationsThemesActivity extends SettingsActivity {}
