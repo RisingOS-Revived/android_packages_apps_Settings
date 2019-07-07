@@ -450,7 +450,8 @@ public class SettingsGateway {
             QuickSettings.class.getName(),
             Gestures.class.getName(),
             com.rising.settings.fragments.lockscreen.LockClockFontsPickerPreview.class.getName(),
-            PrivateDnsSettings.class.getName()
+            PrivateDnsSettings.class.getName(),
+            SmartPixels.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
@@ -511,6 +512,7 @@ public class SettingsGateway {
             Settings.PersonalizationsQuickSettingsActivity.class.getName(),
             Settings.PersonalizationsGesturesActivity.class.getName(),
             Settings.PersonalizationsClockFacesActivity.class.getName(),
-            Settings.PrivateDnsSettingsActivity.class.getName()
+            Settings.PrivateDnsSettingsActivity.class.getName(),
+            Settings.SmartPixelsActivity.class.getName()
     };
 }
