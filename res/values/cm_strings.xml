@@ -227,4 +227,7 @@
 
     <!-- Confirm dialog -->
     <string name="confirm_before_enable_title">Continue to enable?</string>
+
+    <!-- Battery Saver -->
+    <string name="battery_saver_refresh_rate_disabled_summary">Extreme refresh rate is on</string>
 </resources>
