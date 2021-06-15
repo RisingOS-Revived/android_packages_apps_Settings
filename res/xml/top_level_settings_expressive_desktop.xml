@@ -93,7 +93,7 @@
             settings:highlightableMenuKey="@string/menu_key_wallpaper"
             settings:controller="com.android.settings.display.TopLevelWallpaperPreferenceController"/>
 
-    </PreferenceCategory>
+    </com.android.settingslib.widget.UntitledPreferenceCategory>
 
     <PreferenceCategory
         android:order="-120"
@@ -146,7 +146,7 @@
             android:summary="@string/wallpaper_dashboard_summary"
             settings:highlightableMenuKey="@string/menu_key_wallpaper"
             settings:controller="com.android.settings.display.TopLevelWallpaperPreferenceController"/>
-    </com.android.settingslib.widget.UntitledPreferenceCategory>
+    </PreferenceCategory>
 
     <com.android.settingslib.widget.UntitledPreferenceCategory
         android:order="-110"
@@ -291,7 +291,7 @@
             settings:highlightableMenuKey="@string/menu_key_accessibility"
             settings:controller="com.android.settings.accessibility.TopLevelAccessibilityPreferenceController"/>
 
-    </PreferenceCategory>
+    </com.android.settingslib.widget.UntitledPreferenceCategory>
 
     <PreferenceCategory
         android:order="100"
@@ -306,6 +306,5 @@
             android:summary="@string/support_summary"
             settings:highlightableMenuKey="@string/menu_key_support"
             settings:controller="com.android.settings.support.SupportPreferenceController"/>
-    </com.android.settingslib.widget.UntitledPreferenceCategory>
+    </PreferenceCategory>
 </PreferenceScreen>
-

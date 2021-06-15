@@ -82,6 +82,7 @@
     <dimen name="preference_icon_foreground_image_inset">12dp</dimen>
 
     <!-- Search bar -->
+    <dimen name="search_bar_margin">16dp</dimen>
     <dimen name="search_bar_text_size">20sp</dimen>
     <dimen name="search_bar_corner_radius">28dp</dimen>
     <dimen name="search_bar_title_padding_start">-4dp</dimen>
@@ -104,6 +105,7 @@
     <dimen name="homepage_title_margin_horizontal">24dp</dimen>
     <dimen name="homepage_preference_min_height">88sp</dimen>
     <dimen name="homepage_preference_text_padding_start">16dp</dimen>
+    <dimen name="homepage_preference_text_padding_start_two_pane">24dp</dimen>
     <dimen name="homepage_preference_text_padding_start_expressive">12dp</dimen>
 
     <!-- SIM Dialog padding -->
