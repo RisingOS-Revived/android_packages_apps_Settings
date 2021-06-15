@@ -49,6 +49,10 @@
         android:selectable="false"
         settings:isPreferenceVisible="false"/>
 
+    <PreferenceCategory
+        android:key="basic_info_category"
+        android:selectable="false">
+
         <!-- Account name -->
         <Preference
             android:key="branded_account"
