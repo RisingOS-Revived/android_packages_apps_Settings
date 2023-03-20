@@ -15,6 +15,10 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- AdBlock -->
+    <string name="enable_adblock">Enable AdBlock</string>
+    <string name="enable_adblock_summary">Blocks various ads and trackers system-wide.</string>
+
     <!-- Private DNS -->
     <string name="private_dns_mode_cloudflare" translatable="false">Cloudflare DNS</string>
     <!-- Alternative: 1dot1dot1dot1.cloudflare-dns.com -->
