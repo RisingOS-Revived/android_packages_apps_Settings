@@ -91,6 +91,13 @@
             settings:controller=
                 "com.android.settings.sound.MediaControlsLockScreenPreferenceController" />
 
+       <!-- AdBlock -->
+        <SwitchPreferenceCompat
+            android:key="adblock_enabled"
+            android:title="@string/enable_adblock"
+            android:summary="@string/enable_adblock_summary"
+            settings:controller="com.android.settings.privacy.AdBlockPreferenceController"/>
+
         <!-- Allow software fallback for camera extensions -->
         <SwitchPreferenceCompat
             android:key="privacy_camera_extensions_fallback"

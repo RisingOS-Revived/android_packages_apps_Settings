@@ -24,6 +24,10 @@
     <string name="display_engine_default">Default</string>
     <string name="display_engine_mode_footer_text">Inspired by Sony\'s Bravia/X-Reality engine, the Display Engine features Vivid mode for enhanced brightness and color saturation, and X-Reality mode for improved detail and color accuracy.</string>
 
+    <!-- AdBlock -->
+    <string name="enable_adblock">Enable AdBlock</string>
+    <string name="enable_adblock_summary">Blocks various ads and trackers system-wide.</string>
+
     <!-- Private DNS -->
     <string name="private_dns_mode_adguard" translatable="false">AdGuard (CT)</string>
     <string name="private_dns_hostname_adguard" translatable="false">dns.adguard.com</string>
