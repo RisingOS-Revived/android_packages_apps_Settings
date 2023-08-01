@@ -207,4 +207,8 @@
     <string name="private_dns_mode_comss" translatable="false">Comss DNS</string> 
     <!-- Comss DNS hostname -->
     <string name="private_dns_hostname_comss" translatable="false">dns.comss.one</string>
+
+    <!-- Wake gestures haptics -->
+    <string name="doze_gesture_vibrate_title">Haptic feedback</string>
+    <string name="doze_gesture_vibrate_summary">Vibrate when this gesture is invoked</string>
 </resources>
