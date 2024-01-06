@@ -569,4 +569,5 @@ public class Settings extends SettingsActivity {
     public static class PersonalizationsSettingsUIActivity extends SettingsActivity {}
     public static class PersonalizationsWSActivity extends SettingsActivity {}
 
+    public static class ScreenRefreshRateActivity extends SettingsActivity {}
 }
