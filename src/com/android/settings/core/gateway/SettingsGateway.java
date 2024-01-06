@@ -22,6 +22,7 @@ import com.android.settings.MainClear;
 import com.android.settings.MainClearConfirm;
 import com.android.settings.ResetNetwork;
 import com.android.settings.Settings;
+import com.android.settings.Settings.ScreenRefreshRateActivity;
 import com.android.settings.TestingSettings;
 import com.android.settings.TrustedCredentialsSettings;
 import com.android.settings.accessibility.AccessibilityDetailsSettingsFragment;
@@ -113,6 +114,7 @@ import com.android.settings.display.NightDisplaySettings;
 import com.android.settings.display.ScreenTimeoutSettings;
 import com.android.settings.display.SmartAutoRotatePreferenceFragment;
 import com.android.settings.display.darkmode.DarkModeSettingsFragment;
+import com.android.settings.display.refreshrate.ScreenRefreshRateFragment;
 import com.android.settings.dream.DreamSettings;
 import com.android.settings.enterprise.EnterprisePrivacySettings;
 import com.android.settings.fuelgauge.AdvancedPowerUsageDetail;
@@ -453,7 +455,8 @@ public class SettingsGateway {
             com.rising.settings.fragments.lockscreen.LockClockFontsPickerPreview.class.getName(),
             PrivateDnsSettings.class.getName(),
             SmartPixels.class.getName(),
-            RunningServices.class.getName()
+            RunningServices.class.getName(),
+            ScreenRefreshRateFragment.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
@@ -516,6 +519,7 @@ public class SettingsGateway {
             Settings.PersonalizationsClockFacesActivity.class.getName(),
             Settings.PrivateDnsSettingsActivity.class.getName(),
             Settings.SmartPixelsActivity.class.getName(),
-            Settings.DevRunningServicesActivity.class.getName()
+            Settings.DevRunningServicesActivity.class.getName(),
+            Settings.ScreenRefreshRateActivity.class.getName()
     };
 }
