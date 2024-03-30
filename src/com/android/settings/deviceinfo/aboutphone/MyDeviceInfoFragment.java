@@ -66,6 +66,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
+import com.rising.settings.riseInfoPreferenceController;
+
 // LINT.IfChange
 @SearchIndexable
 public class MyDeviceInfoFragment extends DashboardFragment
@@ -90,9 +92,18 @@ public class MyDeviceInfoFragment extends DashboardFragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        use(DeviceNamePreferenceController.class).setHost(this /* parent */);
+        // DeviceNamePreferenceController and BuildNumberPreferenceController are not part of
+        // the active hierarchy when this screen binds via Catalyst (MyDeviceInfoScreen /
+        // MyDeviceInfoApiFirstScreen), so use() can legitimately return null here.
+        final DeviceNamePreferenceController deviceNameController =
+                use(DeviceNamePreferenceController.class);
+        if (deviceNameController != null) {
+            deviceNameController.setHost(this /* parent */);
+        }
         mBuildNumberPreferenceController = use(BuildNumberPreferenceController.class);
-        mBuildNumberPreferenceController.setHost(this /* parent */);
+        if (mBuildNumberPreferenceController != null) {
+            mBuildNumberPreferenceController.setHost(this /* parent */);
+        }
     }
 
     @Override
@@ -154,6 +165,7 @@ public class MyDeviceInfoFragment extends DashboardFragment
         controllers.add(new FeedbackPreferenceController(fragment, context));
         controllers.add(new FccEquipmentIdPreferenceController(context));
         controllers.add(new UptimePreferenceController(context, lifecycle));
+        controllers.add(new riseInfoPreferenceController(context));
 
         Consumer<String> imeiInfoList = imeiKey -> {
             if (Flags.catalystMyDeviceInfoPrefScreen()) {
@@ -197,7 +209,9 @@ public class MyDeviceInfoFragment extends DashboardFragment
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (mBuildNumberPreferenceController.onActivityResult(requestCode, resultCode, data)) {
+        if (mBuildNumberPreferenceController != null
+                && mBuildNumberPreferenceController.onActivityResult(
+                        requestCode, resultCode, data)) {
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -244,7 +258,9 @@ public class MyDeviceInfoFragment extends DashboardFragment
     public void onSetDeviceNameConfirm(boolean confirm) {
         final DeviceNamePreferenceController controller = use(
                 DeviceNamePreferenceController.class);
-        controller.updateDeviceName(confirm);
+        if (controller != null) {
+            controller.updateDeviceName(confirm);
+        }
     }
 
     @Override
