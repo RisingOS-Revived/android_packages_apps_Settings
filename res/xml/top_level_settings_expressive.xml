@@ -20,6 +20,19 @@
     xmlns:settings="http://schemas.android.com/apk/res-auto"
     android:key="top_level_settings">
 
+    <!-- This category should hold uncategorized preferences such as OEM parts, unknown dashboard injects etc -->
+    <com.android.settings.preferences.AutoHidePreferenceCategory
+        android:order="-1001"
+        android:key="top_level_extras_category"
+        android:layout="@layout/settingslib_preference_category_no_title">
+    </com.android.settings.preferences.AutoHidePreferenceCategory>
+
+    <com.android.settings.utils.SystemStatsPreference
+        android:order="-140"
+        android:key="first_settings_circle_cards"
+        android:layout="@layout/first_settings_circle_cards"
+        android:selectable="false"/>
+
     <com.android.settingslib.widget.UntitledPreferenceCategory
         android:order="-130"
         android:key="top_level_connectivity_category">
@@ -49,7 +62,7 @@
         android:key="top_level_personalize_category">
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.rising.settings.PersonalizationsFragment"
-            android:icon="@drawable/ic_settings_cogs"
+            android:icon="@drawable/ic_homepage_personalization"
             android:key="top_level_personalizations"
             android:order="-61"
             android:title="@string/rising_settings_title"
@@ -125,28 +138,8 @@
 
     <com.android.settingslib.widget.UntitledPreferenceCategory
         android:order="-110"
-        android:key="top_level_system_info_category"
+        android:key="top_level_system_category"
         android:layout="@layout/settingslib_expressive_untitled_preference_category">
-        <com.android.settings.widget.HomepagePreference
-            android:fragment="com.android.settings.deviceinfo.StorageDashboardFragment"
-            android:icon="@drawable/ic_homepage_storage"
-            android:key="top_level_storage"
-            android:order="-50"
-            android:title="@string/storage_settings"
-            android:summary="@string/summary_placeholder"
-            settings:highlightableMenuKey="@string/menu_key_storage"
-            settings:controller="com.android.settings.deviceinfo.TopLevelStoragePreferenceController"/>
-
-        <com.android.settings.widget.HomepagePreference
-            android:fragment="com.android.settings.fuelgauge.batteryusage.PowerUsageSummary"
-            android:icon="@drawable/ic_homepage_battery"
-            android:key="top_level_battery"
-            android:order="-30"
-            android:title="@string/power_usage_summary_title"
-            android:summary="@string/summary_placeholder"
-            settings:highlightableMenuKey="@string/menu_key_battery"
-            settings:controller="com.android.settings.fuelgauge.TopLevelBatteryPreferenceController"/>
-
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.android.settings.system.SystemDashboardFragment"
             android:icon="@drawable/ic_homepage_system_dashboard"
@@ -156,15 +149,6 @@
             android:summary="@string/system_dashboard_summary"
             settings:highlightableMenuKey="@string/menu_key_system"/>
 
-        <com.android.settings.widget.HomepagePreference
-            android:fragment="com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment"
-            android:icon="@drawable/ic_homepage_about"
-            android:key="top_level_about_device"
-            android:order="-10"
-            android:title="@string/about_settings"
-            android:summary="@string/summary_placeholder"
-            settings:highlightableMenuKey="@string/menu_key_about_device"
-            settings:controller="com.android.settings.deviceinfo.aboutphone.TopLevelAboutDevicePreferenceController"/>
     </com.android.settingslib.widget.UntitledPreferenceCategory>
 
     <com.android.settingslib.widget.UntitledPreferenceCategory
@@ -261,6 +245,16 @@
         android:layout="@layout/settingslib_expressive_untitled_preference_category">
 
         <com.android.settings.widget.HomepagePreference
+            android:fragment="com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment"
+            android:icon="@drawable/ic_homepage_about"
+            android:key="top_level_about_device"
+            android:order="-10"
+            android:title="@string/about_settings"
+            android:summary="@string/summary_placeholder"
+            settings:highlightableMenuKey="@string/menu_key_about_device"
+            settings:controller="com.android.settings.deviceinfo.aboutphone.TopLevelAboutDevicePreferenceController"/>
+
+        <com.android.settings.widget.HomepagePreference
             android:fragment="com.android.settings.accessibility.AccessibilitySettings"
             android:icon="@drawable/ic_homepage_accessibility"
             android:key="top_level_accessibility"
@@ -279,5 +273,11 @@
             settings:highlightableMenuKey="@string/menu_key_support"
             settings:controller="com.android.settings.support.SupportPreferenceController"/>
     </com.android.settingslib.widget.UntitledPreferenceCategory>
-</PreferenceScreen>
 
+    <com.android.settings.preferences.HiddenPreferenceCategory
+        android:order="150"
+        android:key="top_level_system_info_category"
+        android:layout="@layout/settingslib_preference_category_no_title">
+
+    </com.android.settings.preferences.HiddenPreferenceCategory>
+</PreferenceScreen>

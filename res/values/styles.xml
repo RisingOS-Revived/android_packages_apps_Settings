@@ -16,6 +16,11 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:androidprv="http://schemas.android.com/apk/prv/res/android">
 
+    <style name="HomepageTitleText" parent="@android:style/TextAppearance.Material">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Widget.ActionBar.Base"
            parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid"/>
 
@@ -585,7 +590,7 @@
 
     <style name="SearchBarStyle">
         <item name="android:theme">@style/Theme.MaterialComponents.DayNight</item>
-        <item name="cardCornerRadius">@dimen/search_bar_corner_radius</item>
+        <item name="cardCornerRadius">@dimen/custom_search_bar_corner_radius</item>
         <item name="cardElevation">0dp</item>
     </style>
 
