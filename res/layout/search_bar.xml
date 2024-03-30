@@ -17,35 +17,44 @@
 
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/SearchBarStyle_v2"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/search_bar_margin"
+    android:layout_marginBottom="@dimen/search_bar_bottom_margin"
+    android:layout_marginStart="@dimen/search_bar_margin_start"
+    android:layout_marginEnd="@dimen/search_bar_margin_end"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="@dimen/custom_search_bar_corner_radius"
+    app:strokeWidth="0dp">
 
-    <LinearLayout
-        android:id="@+id/search_action_bar"
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/search_bar_blur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="72dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:focusedByDefault="true"
-        android:background="@drawable/search_bar_selected_background">
+        app:blurOverlayColor="@color/search_bar_blur_overlay">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:importantForAccessibility="no"
-            android:src="@drawable/ic_homepage_search" />
-        <TextView
-            android:id="@+id/search_bar_title"
-            style="@style/TextAppearance.SearchBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="@string/homepage_search"/>
-    </LinearLayout>
+        <Toolbar
+            android:id="@+id/search_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/custom_avatar_length"
+            android:paddingStart="@dimen/search_bar_padding_start"
+            android:background="@android:color/transparent"
+            android:touchscreenBlocksFocus="false"
+            android:nextFocusForward="@+id/homepage_container"
+            android:navigationIcon="@drawable/ic_homepage_search"
+            android:contentInsetStartWithNavigation="@dimen/search_bar_content_inset">
+            <com.android.settings.utils.SettingsSearchTextView
+                android:id="@+id/search_action_bar_title"
+                style="@style/TextAppearance.SearchBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="12dp"
+                android:layout_gravity="start"
+                android:textSize="18sp"
+                android:textColor="@color/top_level_preference_text_color_primary"
+                android:text="@string/search_homepage"/>
+        </Toolbar>
+    </eightbitlab.com.blurview.BlurView>
 </com.google.android.material.card.MaterialCardView>

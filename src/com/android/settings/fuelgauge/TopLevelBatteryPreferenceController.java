@@ -140,6 +140,9 @@ public class TopLevelBatteryPreferenceController extends BasePreferenceControlle
                             mBatteryStatusFeatureProvider.triggerBatteryStatusUpdate(this, info);
                     ThreadUtils.postOnMainThread(
                             () -> {
+                                if (mPreference == null) {
+                                    return;
+                                }
                                 if (!triggerBatteryStatusUpdate) {
                                     mBatteryStatusLabel = null; // will generateLabel()
                                 }

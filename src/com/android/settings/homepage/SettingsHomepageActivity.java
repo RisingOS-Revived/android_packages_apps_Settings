@@ -42,7 +42,9 @@ import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.FeatureFlagUtils;
 import android.util.Log;
+import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -82,9 +84,14 @@ import com.android.settingslib.widget.SettingsThemeHelper;
 
 import com.google.android.setupcompat.util.WizardManagerHelper;
 
+import com.android.settings.utils.UserUtils;
+
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
+
+import eightbitlab.com.blurview.BlurTarget;
+import eightbitlab.com.blurview.BlurView;
 
 /** Settings homepage activity */
 public class SettingsHomepageActivity extends FragmentActivity implements
@@ -117,6 +124,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     private boolean mIsTwoPane;
     // A regular layout shows icons on homepage, whereas a simplified layout doesn't.
     private boolean mIsRegularLayout = true;
+    
+    private UserUtils mUserUtils;
 
     private SplitControllerCallbackAdapter mSplitControllerAdapter;
     private SplitInfoCallback mCallback;
@@ -261,7 +270,10 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         updateHomepageBackground();
         mLoadedListeners = new ArraySet<>();
 
+        mUserUtils = UserUtils.Companion.getInstance(getApplicationContext());
+
         initSearchBarView();
+        initSearchBarBlur();
 
         getLifecycle().addObserver(new HideNonSystemOverlayMixin(this));
         mCategoryMixin = new CategoryMixin(this);
@@ -302,6 +314,11 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         updateSplitLayout();
 
         enableTaskLocaleOverride();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @VisibleForTesting
@@ -370,15 +387,6 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         }
         mIsRegularLayout = !mIsRegularLayout;
 
-        // Update search title padding
-        View searchTitle = findViewById(R.id.search_bar_title);
-        if (searchTitle != null) {
-            int paddingStart = getResources().getDimensionPixelSize(
-                    mIsRegularLayout
-                            ? R.dimen.search_bar_title_padding_start_regular_two_pane
-                            : R.dimen.search_bar_title_padding_start);
-            searchTitle.setPaddingRelative(paddingStart, 0, 0, 0);
-        }
         // Notify fragments
         getSupportFragmentManager().getFragments().forEach(fragment -> {
             if (fragment instanceof SplitLayoutListener) {
@@ -393,16 +401,19 @@ public class SettingsHomepageActivity extends FragmentActivity implements
                 (v, windowInsets) -> {
                     Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()
                             | WindowInsetsCompat.Type.displayCutout());
-                    // Apply the insets paddings to the view.
-                    v.setPadding(insets.left, 0, insets.right, insets.bottom);
+                    // Apply the insets paddings to the view - top insets only
+                    v.setPadding(insets.left, insets.top, insets.right, 0);
 
-                    // reset the top padding of search bar container to original top padding
-                    // plus insets top.
+                    // Apply bottom insets to search bar container (now at bottom)
                     View container = findViewById(R.id.app_bar_container);
-                    final int top_padding = getResources().getDimensionPixelSize(
-                            R.dimen.search_bar_container_top_padding);
-                    container.setPadding(container.getPaddingLeft(), top_padding + insets.top,
-                            container.getPaddingRight(), container.getPaddingBottom());
+                    if (container != null) {
+                        container.setPadding(
+                            container.getPaddingLeft(),
+                            container.getPaddingTop(),
+                            container.getPaddingRight(),
+                            insets.bottom
+                        );
+                    }
 
                     // Return CONSUMED if you don't want the window insets to keep being
                     // passed down to descendant views.
@@ -415,6 +426,32 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         FeatureFactory.getFeatureFactory().getSearchFeatureProvider()
                 .initSearchToolbar(this /* activity */, toolbar,
                         SettingsEnums.SETTINGS_HOMEPAGE);
+    }
+
+    private void initSearchBarBlur() {
+        final BlurView blurView = findViewById(R.id.search_bar_blur);
+        final BlurTarget blurTarget = findViewById(R.id.blur_target);
+        if (blurView == null || blurTarget == null) {
+            return;
+        }
+
+        // Defer setup until after the first layout pass so the target has real dimensions;
+        // calling setupWith() before that yields a blank/black blur.
+        blurTarget.post(() -> {
+            if (isFinishing() || isDestroyed()) {
+                return;
+            }
+            final float radius = 12f;
+            final Window window = getWindow();
+            final Drawable windowBackground = window.getDecorView().getBackground();
+
+            blurView.setupWith(blurTarget)
+                    .setFrameClearDrawable(windowBackground)
+                    .setBlurRadius(radius);
+            blurView.setOverlayColor(getColor(R.color.search_bar_blur_overlay));
+            blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
+            blurView.setClipToOutline(true);
+        });
     }
 
     private void updateHomepageUI() {
@@ -440,8 +477,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
 
         // Update content background.
         findViewById(android.R.id.content).setBackgroundColor(color);
-        //Update search bar background
-        findViewById(R.id.app_bar_container).setBackgroundColor(color);
+        // Note: app_bar_container background is intentionally left transparent (set in XML)
+        // so the blurred search bar shows the scrolling content behind it.
     }
 
     private void showSuggestionFragment(boolean scrollNeeded) {
