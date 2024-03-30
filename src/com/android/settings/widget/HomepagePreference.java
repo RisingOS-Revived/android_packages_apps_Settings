@@ -17,11 +17,25 @@
 package com.android.settings.widget;
 
 import android.content.Context;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothProfile;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.telephony.TelephonyManager;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.android.settings.R;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
+import java.util.Set;
 
 import com.android.settings.flags.Flags;
 import com.android.settingslib.drawer.EntriesProvider;
@@ -31,9 +45,18 @@ public class HomepagePreference extends Preference implements
         HomepagePreferenceLayoutHelper.HomepagePreferenceLayout {
 
     private final HomepagePreferenceLayoutHelper mHelper;
+    private final Handler mHandler = new Handler();
+    private PreferenceViewHolder mHolder;
+    private final Runnable mConnectivityRunnable = new Runnable() {
+        @Override
+        public void run() {
+            notifyChanges();
+            mHandler.postDelayed(this, 2000);
+        }
+    };
 
     public HomepagePreference(Context context, AttributeSet attrs, int defStyleAttr,
-            int defStyleRes) {
+                              int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         mHelper = new HomepagePreferenceLayoutHelper(this);
     }
@@ -57,6 +80,103 @@ public class HomepagePreference extends Preference implements
     public void onBindViewHolder(PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
         mHelper.onBindViewHolder(holder);
+        mHolder = holder;
+        setPreferencesSummaryVisibility();
+        mHandler.postDelayed(mConnectivityRunnable, 1000);
+    }
+    
+    private void setPreferencesSummaryVisibility() {
+        if (mHolder == null) return;
+        String key = getKey();
+        View summaryView = mHolder.findViewById(android.R.id.summary);
+        if ("top_level_network".equals(key)|| "top_level_connected_devices".equals(key)) {
+            summaryView.setVisibility(View.VISIBLE);
+            setSummaryLayoutParams(summaryView, true);
+        } else {
+            summaryView.setVisibility(View.GONE);
+            setSummaryLayoutParams(summaryView, false);
+        }
+    }
+
+    private void notifyChanges() {
+        if (mHolder == null) return;
+        String key = getKey();
+        if ("top_level_network".equals(key)) {
+            String connectedNetwork = getConnectedNetwork(getContext());
+            String summary = getContext().getString(com.android.settings.utils.NetworkUtils.isNetworkAvailable(getContext()) 
+                ? R.string.network_dashboard_summary_mobile : R.string.network_dashboard_summary_no_mobile);
+            setSummary(connectedNetwork != null ? connectedNetwork : summary);
+        } else if ("top_level_connected_devices".equals(key)) {
+            String connectedBluetooth = getConnectedBluetoothDevice(getContext());
+            String summary = getContext().getString(R.string.connected_devices_dashboard_default_summary);
+            setSummary(connectedBluetooth != null ? connectedBluetooth : summary);
+        }
+    }
+
+    private String getConnectedNetwork(Context context) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                String ssid = wifiManager.getConnectionInfo().getSSID();
+                if (ssid != null && ssid.startsWith("\"") && ssid.endsWith("\"")) {
+                    ssid = ssid.substring(1, ssid.length() - 1);
+                }
+                return ssid;
+            } else if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                String networkOperatorName = telephonyManager.getNetworkOperatorName();
+                int networkType = networkInfo.getSubtype();
+                String type = "";
+                switch (networkType) {
+                    case TelephonyManager.NETWORK_TYPE_NR: // 5G
+                        type = "5G";
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_LTE: // 4G
+                        type = "4G";
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_HSPAP: // 3G
+                        type = "3G";
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_EDGE: // 2G
+                        type = "2G";
+                        break;
+                    default:
+                        type = "Data";
+                        break;
+                }
+                return networkOperatorName + " - " + type;
+            }
+        }
+        return null;
+    }
+
+    private String getConnectedBluetoothDevice(Context context) {
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+            Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+            for (BluetoothDevice device : pairedDevices) {
+                if (bluetoothAdapter.getProfileConnectionState(BluetoothProfile.HEADSET) == BluetoothProfile.STATE_CONNECTED ||
+                    bluetoothAdapter.getProfileConnectionState(BluetoothProfile.A2DP) == BluetoothProfile.STATE_CONNECTED ||
+                    bluetoothAdapter.getProfileConnectionState(BluetoothProfile.HEARING_AID) == BluetoothProfile.STATE_CONNECTED ||
+                    bluetoothAdapter.getProfileConnectionState(BluetoothProfile.LE_AUDIO) == BluetoothProfile.STATE_CONNECTED) {
+                    if (device.isConnected()) {
+                        return device.getName();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private void setSummaryLayoutParams(View summaryView, boolean visible) {
+        if (summaryView.getLayoutParams() != null) {
+            summaryView.getLayoutParams().width = visible ? ViewGroup.LayoutParams.WRAP_CONTENT : 0;
+            summaryView.getLayoutParams().height = visible ? ViewGroup.LayoutParams.WRAP_CONTENT : 0;
+            summaryView.requestLayout();
+        }
     }
 
     @Override
@@ -76,5 +196,11 @@ public class HomepagePreference extends Preference implements
                 extras.putInt(EntriesProvider.EXTRA_ALERT_VALUE, value);
             }
         }
+    }
+
+    @Override
+    public void onDetached() {
+        super.onDetached();
+        mHandler.removeCallbacks(mConnectivityRunnable);
     }
 }
