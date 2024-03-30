@@ -67,12 +67,38 @@
         android:key="top_level_personalize_category">
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.rising.settings.PersonalizationsFragment"
-            android:icon="@drawable/ic_settings_cogs"
+            android:icon="@drawable/ic_homepage_personalization"
             android:key="top_level_personalizations"
-            android:order="-61"
+            android:order="-63"
             android:title="@string/rising_settings_title"
             android:summary="@string/rising_settings_summary"
             settings:controller="com.rising.settings.TopLevelSettingsPreferenceController"/>
+
+        <com.android.settings.widget.HomepagePreference
+            android:fragment="com.android.settings.DisplaySettings"
+            android:icon="@drawable/ic_custom_settings_display_white"
+            android:key="top_level_display"
+            android:order="-62"
+            android:title="@string/display_settings"
+            android:summary="@string/display_dashboard_summary"
+            settings:highlightableMenuKey="@string/menu_key_display"
+            settings:controller="com.android.settings.display.TopLevelDisplayPreferenceController"/>
+
+        <com.android.settings.widget.RestrictedHomepagePreference
+            android:icon="@drawable/ic_custom_settings_wallpaper_white"
+            android:key="top_level_wallpaper"
+            android:order="-61"
+            android:title="@string/wallpaper_settings_title"
+            android:summary="@string/wallpaper_dashboard_summary"
+            settings:highlightableMenuKey="@string/menu_key_wallpaper"
+            settings:controller="com.android.settings.display.TopLevelWallpaperPreferenceController"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:order="-120"
+        android:key="top_level_personalize_category"
+        android:layout="@layout/settingslib_preference_category_no_title">
 
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.android.settings.applications.AppDashboardFragment"
@@ -264,6 +290,13 @@
             android:summary="@string/accessibility_settings_summary"
             settings:highlightableMenuKey="@string/menu_key_accessibility"
             settings:controller="com.android.settings.accessibility.TopLevelAccessibilityPreferenceController"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:order="100"
+        android:key="top_level_support_category"
+        android:layout="@layout/settingslib_preference_category_no_title">
 
         <com.android.settings.widget.HomepagePreference
             android:icon="@drawable/ic_homepage_support"
