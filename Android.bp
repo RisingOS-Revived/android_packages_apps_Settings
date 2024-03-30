@@ -144,6 +144,9 @@ android_library {
         // Lineage dependencies
         "org.lineageos.platform.internal",
         "LineagePreferenceLib",
+
+        // Rising dependencies
+        "blurview",
     ],
 
     plugins: [
@@ -248,4 +251,9 @@ android_library_import {
 filegroup {
     name: "Settings_proguard_flags",
     srcs: ["proguard.flags"],
+}
+
+android_library_import {
+    name: "blurview",
+    aars: ["libs/BlurView-3.2.0.aar"],
 }
