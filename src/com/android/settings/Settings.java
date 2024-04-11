@@ -539,6 +539,8 @@ public class Settings extends SettingsActivity {
     public static class MagnificationActivity extends SettingsActivity { /* empty */ }
     public static class FlashNotificationsActivity extends SettingsActivity { /* empty */ }
 
+    public static class PrivateDnsSettingsActivity extends SettingsActivity { /* empty */ }
+
     /** Personalizations Activities **/
     public static class PersonalizationsActivity extends SettingsActivity {}
     public static class PersonalizationsThemesActivity extends SettingsActivity {}
