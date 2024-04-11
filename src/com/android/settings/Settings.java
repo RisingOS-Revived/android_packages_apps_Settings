@@ -841,5 +841,5 @@ public class Settings extends SettingsActivity {
     public static class PersonalizationsIconPackActivity extends SettingsActivity {}
     public static class PersonalizationsSettingsUIActivity extends SettingsActivity {}
     public static class PersonalizationsWSActivity extends SettingsActivity {}
-
+    public static class PrivateDnsSettingsActivity extends SettingsActivity { /* empty */ }
 }
