@@ -657,6 +657,7 @@ public class SettingsActivity extends SettingsBaseActivity
     protected boolean isValidFragment(String fragmentName) {
         // Almost all fragments are wrapped in this,
         // except for a few that have their own activities.
+        if (fragmentName.contains("com.rising.settings")) return true;
         for (int i = 0; i < SettingsGateway.ENTRY_FRAGMENTS.length; i++) {
             if (SettingsGateway.ENTRY_FRAGMENTS[i].equals(fragmentName)) return true;
         }
@@ -809,7 +810,7 @@ public class SettingsActivity extends SettingsBaseActivity
                                 .getIntent().getComponent();
                         final String name = component.getClassName();
                         final boolean isEnabledForRestricted = ArrayUtils.contains(
-                                SettingsGateway.SETTINGS_FOR_RESTRICTED, name);
+                                SettingsGateway.SETTINGS_FOR_RESTRICTED, name) || name.contains("Personalizations");
                         if (packageName.equals(component.getPackageName())
                                 && !isEnabledForRestricted) {
                             somethingChanged =
@@ -838,7 +839,7 @@ public class SettingsActivity extends SettingsBaseActivity
             boolean enabled, boolean isAdmin) {
         if (UserHandle.MU_ENABLED && !isAdmin && getPackageName().equals(component.getPackageName())
                 && !ArrayUtils.contains(SettingsGateway.SETTINGS_FOR_RESTRICTED,
-                component.getClassName())) {
+                component.getClassName()) && !component.getClassName().contains("Personalizations")) {
             enabled = false;
         }
         boolean changed = setTileEnabled(component, enabled);
