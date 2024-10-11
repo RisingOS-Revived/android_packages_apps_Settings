@@ -818,4 +818,28 @@ public class Settings extends SettingsActivity {
             }
         }
     }
+
+    /** Personalizations Activities **/
+    public static class PersonalizationsActivity extends SettingsActivity {}
+    public static class PersonalizationsThemesActivity extends SettingsActivity {}
+    public static class PersonalizationsLockscreenActivity extends SettingsActivity {}
+    public static class PersonalizationsToolboxActivity extends SettingsActivity {}
+    public static class PersonalizationsColorsActivity extends SettingsActivity {}
+    public static class PersonalizationsFontsActivity extends SettingsActivity {}
+    public static class PersonalizationsSoundsActivity extends SettingsActivity {}
+    public static class PersonalizationsIconsActivity extends SettingsActivity {}
+    public static class PersonalizationsNotificationsActivity extends SettingsActivity {}
+    public static class PersonalizationsStatusBarActivity extends SettingsActivity {}
+    public static class PersonalizationsQuickSettingsActivity extends SettingsActivity {}
+    public static class PersonalizationsGesturesActivity extends SettingsActivity {}
+    public static class PersonalizationsClockFacesActivity extends SettingsActivity {}
+    public static class PersonalizationsWidgetsActivity extends SettingsActivity {}
+    public static class PersonalizationsPDActivity extends SettingsActivity {}
+    public static class PersonalizationsAODActivity extends SettingsActivity {}
+    public static class PersonalizationsDWActivity extends SettingsActivity {}
+    public static class PersonalizationsBSActivity extends SettingsActivity {}
+    public static class PersonalizationsIconPackActivity extends SettingsActivity {}
+    public static class PersonalizationsSettingsUIActivity extends SettingsActivity {}
+    public static class PersonalizationsWSActivity extends SettingsActivity {}
+
 }

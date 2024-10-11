@@ -222,6 +222,10 @@ import com.android.settings.wifi.p2p.WifiP2pSettings;
 import com.android.settings.wifi.savedaccesspoints2.SavedAccessPointsWifiSettings2;
 import com.android.settings.wifi.tether.WifiTetherSettings;
 
+import com.rising.settings.PersonalizationsFragment;
+import com.rising.settings.fragments.*;
+import com.rising.settings.fragments.ui.SmartPixels;
+
 public class SettingsGateway {
 
     /**
@@ -432,6 +436,19 @@ public class SettingsGateway {
             SummarizationPreferenceFragment.class.getName(),
             SafetyCenterFragment.class.getName(),
             SafetyCenterQsFragment.class.getName(),
+            PersonalizationsFragment.class.getName(),
+            LockScreen.class.getName(),
+            Themes.class.getName(),
+            Toolbox.class.getName(),
+            ColorsSettingsFragment.class.getName(),
+            com.rising.settings.fragments.ui.fonts.FontPickerPreview.class.getName(),
+            Notifications.class.getName(),
+            Sound.class.getName(),
+            com.rising.settings.fragments.ui.IconShapes.class.getName(),
+            StatusBar.class.getName(),
+            QuickSettings.class.getName(),
+            Gestures.class.getName(),
+            com.rising.settings.fragments.lockscreen.LockClockFontsPickerPreview.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
@@ -479,5 +496,18 @@ public class SettingsGateway {
             Settings.MemtagPageActivity.class.getName(),
             Settings.NavigationModeSettingsActivity.class.getName(),
             Settings.ShadeSettingsActivity.class.getName(),
+            Settings.PersonalizationsActivity.class.getName(),
+            Settings.PersonalizationsLockscreenActivity.class.getName(),
+            Settings.PersonalizationsToolboxActivity.class.getName(),
+            Settings.PersonalizationsThemesActivity.class.getName(),
+            Settings.PersonalizationsColorsActivity.class.getName(),
+            Settings.PersonalizationsFontsActivity.class.getName(),
+            Settings.PersonalizationsSoundsActivity.class.getName(),
+            Settings.PersonalizationsIconsActivity.class.getName(),
+            Settings.PersonalizationsNotificationsActivity.class.getName(),
+            Settings.PersonalizationsStatusBarActivity.class.getName(),
+            Settings.PersonalizationsQuickSettingsActivity.class.getName(),
+            Settings.PersonalizationsGesturesActivity.class.getName(),
+            Settings.PersonalizationsClockFacesActivity.class.getName()
     };
 }
