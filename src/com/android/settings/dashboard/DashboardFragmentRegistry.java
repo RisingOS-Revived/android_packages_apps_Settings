@@ -58,6 +58,8 @@ import com.android.settings.supervision.SupervisionDashboardFragment;
 import com.android.settings.system.SystemDashboardFragment;
 import com.android.settingslib.drawer.CategoryKey;
 
+import com.rising.settings.PersonalizationsFragment;
+
 import java.util.Map;
 
 /**
@@ -156,6 +158,8 @@ public class DashboardFragmentRegistry {
                 CategoryKey.CATEGORY_SC_DEVICE_FINDERS);
         PARENT_TO_CATEGORY_KEY_MAP.put(SystemAndUpdatesSubpageFragment.class.getName(),
                 CategoryKey.CATEGORY_SC_SYSTEM_AND_UPDATES);
+        PARENT_TO_CATEGORY_KEY_MAP.put(PersonalizationsFragment.class.getName(),
+                PersonalizationsFragment.CATEGORY_KEY);
 
         CATEGORY_KEY_TO_PARENT_MAP = new ArrayMap<>(PARENT_TO_CATEGORY_KEY_MAP.size());
 

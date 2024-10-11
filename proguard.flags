@@ -6,6 +6,8 @@
 -keepattributes Exceptions
 
 # Keep all Fragments in this package, which are used by reflection.
+-keep class com.rising.settings.**
+
 # TODO(b/373579455): Evaluate if <init> needs to be kept.
 -keep public class com.android.settings*.** extends androidx.fragment.app.Fragment {
     void <init>();
