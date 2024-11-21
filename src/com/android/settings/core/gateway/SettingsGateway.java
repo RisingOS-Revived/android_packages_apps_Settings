@@ -416,7 +416,12 @@ public class SettingsGateway {
             PersonalizationsFragment.class.getName(),
             LockScreen.class.getName(),
             Themes.class.getName(),
-            Toolbox.class.getName()
+            Toolbox.class.getName(),
+            MonetSettings.class.getName(),
+            com.rising.settings.fragments.ui.fonts.FontPickerPreview.class.getName(),
+            Notifications.class.getName(),
+            Sound.class.getName(),
+            com.rising.settings.fragments.ui.IconShapes.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
@@ -466,6 +471,11 @@ public class SettingsGateway {
             Settings.PersonalizationsActivity.class.getName(),
             Settings.PersonalizationsLockscreenActivity.class.getName(),
             Settings.PersonalizationsToolboxActivity.class.getName(),
-            Settings.PersonalizationsThemesActivity.class.getName()
+            Settings.PersonalizationsThemesActivity.class.getName(),
+            Settings.PersonalizationsColorsActivity.class.getName(),
+            Settings.PersonalizationsFontsActivity.class.getName(),
+            Settings.PersonalizationsSoundsActivity.class.getName(),
+            Settings.PersonalizationsIconsActivity.class.getName(),
+            Settings.PersonalizationsNotificationsActivity.class.getName()
     };
 }
