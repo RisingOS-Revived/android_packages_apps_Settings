@@ -145,6 +145,7 @@ android_library {
         // Lineage dependencies
         "org.lineageos.platform.internal",
         "LineagePreferenceLib",
+        "androidx.room_room-runtime",
 
         // Rising dependencies
         "blurview",
