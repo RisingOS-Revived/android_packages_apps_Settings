@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Display settings screen, peak refresh rate settings summary [CHAR LIMIT=NONE] -->
+    <string name="refresh_rate_title">刷新率</string>
+    <string name="refresh_rate_summary_vrr_off">%d Hz</string> 
+    <string name="refresh_rate_summary_vrr_on">%d Hz (自适应)</string>
+    <string name="refresh_rate_vrr_title">自适应刷新率</string> 
+    <string name="refresh_rate_vrr_summary">在屏幕闲置时自动降低刷新率以节省电量。在某些屏幕上可能会导致闪烁或色彩偏移</string> 
+    <string name="refresh_rate_footer">更高的刷新率使显示的内容变化时变得更加流畅，但会增加电量消耗</string>
+    <string name="keywords_refresh_rate">刷新, 速度, 平滑, 峰值, 60hz, 90hz, 120hz, 144hz, 165hz</string>
+    <string name="peak_refresh_rate_summary_custom">自动将某些内容的刷新频率从 60 Hz 调高到 %1$d Hz。这么做会增加耗电量</string>
+</resources>
