@@ -273,8 +273,6 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         mUserUtils = UserUtils.Companion.getInstance(getApplicationContext());
 
         initSearchBarView();
-        
-        initAvatarView();
 
         getLifecycle().addObserver(new HideNonSystemOverlayMixin(this));
         mCategoryMixin = new CategoryMixin(this);
@@ -327,7 +325,6 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     @Override
     public void onResume() {
         super.onResume();
-        initAvatarView();
     }
 
     @VisibleForTesting
@@ -458,20 +455,6 @@ public class SettingsHomepageActivity extends FragmentActivity implements
                         .initSearchToolbar(this /* activity */, toolbarTwoPaneVersion,
                                 SettingsEnums.SETTINGS_HOMEPAGE);
             }
-        }
-    }
-
-    private void initAvatarView() {
-        if (homepageRevamp()) return;
-        final ImageView avatarView = findViewById(R.id.account_avatar);
-        final ImageView avatarTwoPaneView = findViewById(R.id.account_avatar_two_pane_version);
-        if (avatarView != null) {
-            avatarView.setVisibility(mIsEmbeddingActivityEnabled ? View.INVISIBLE : View.VISIBLE);
-            mUserUtils.setUserAvatarToView(avatarView);
-        }
-        if (avatarTwoPaneView != null) {
-            avatarTwoPaneView.setVisibility(mIsEmbeddingActivityEnabled ? View.VISIBLE : View.INVISIBLE);
-            mUserUtils.setUserAvatarToView(avatarTwoPaneView);
         }
     }
 
