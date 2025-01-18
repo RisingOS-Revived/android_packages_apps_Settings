@@ -84,6 +84,7 @@ public abstract class DashboardFragment extends SettingsPreferenceFragment
     private int lastOrderIncrement = -1001;
 
     private static final List<String> ACCOUNT_INJECTED_KEYS = Arrays.asList(
+        "crdroid_device_parts_settings"
     );
 
     private static final List<String> SECURITY_PRIVACY_INJECTED_KEYS = Arrays.asList(
