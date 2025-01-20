@@ -671,7 +671,8 @@ public abstract class DashboardFragment extends SettingsPreferenceFragment
                         group = screen.findPreference("top_level_account_category");
                     } else if (SECURITY_PRIVACY_INJECTED_KEYS.contains(key)) {
                         group = screen.findPreference("top_level_security_privacy_category");
-                    } else {
+                    } else if (!ACCOUNT_INJECTED_KEYS.contains(key) 
+                        || !SECURITY_PRIVACY_INJECTED_KEYS.contains(key)) {
                         KEY_ORDER.put(key, lastOrderIncrement);
                         lastOrderIncrement = lastOrderIncrement - 1;
                         group = screen.findPreference("top_level_extras_category");
