@@ -41,6 +41,12 @@
 
     </com.android.settings.preferences.AutoHidePreferenceCategory>
 
+    <com.android.settings.utils.SystemStatsPreference
+        android:order="-140"
+        android:key="first_settings_circle_cards"
+        android:layout="@layout/first_settings_circle_cards"
+        android:selectable="false"/>
+
     <PreferenceCategory
         android:order="-130"
         android:key="top_level_connectivity_category"
@@ -153,26 +159,6 @@
             android:summary="@string/communal_settings_summary"
             settings:highlightableMenuKey="@string/menu_key_communal"
             settings:controller="com.android.settings.communal.CommunalPreferenceController"/>
-
-        <com.android.settings.widget.HomepagePreference
-            android:fragment="com.android.settings.deviceinfo.StorageDashboardFragment"
-            android:icon="@drawable/ic_custom_storage_white"
-            android:key="top_level_storage"
-            android:order="-50"
-            android:title="@string/storage_settings"
-            android:summary="@string/summary_placeholder"
-            settings:highlightableMenuKey="@string/menu_key_storage"
-            settings:controller="com.android.settings.deviceinfo.TopLevelStoragePreferenceController"/>
-
-        <com.android.settings.widget.HomepagePreference
-            android:fragment="com.android.settings.fuelgauge.batteryusage.PowerUsageSummary"
-            android:icon="@drawable/ic_custom_settings_battery_white"
-            android:key="top_level_battery"
-            android:order="-30"
-            android:title="@string/power_usage_summary_title"
-            android:summary="@string/summary_placeholder"
-            settings:highlightableMenuKey="@string/menu_key_battery"
-            settings:controller="com.android.settings.fuelgauge.TopLevelBatteryPreferenceController"/>
 
     </PreferenceCategory>
 
