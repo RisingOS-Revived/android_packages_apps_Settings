@@ -24,11 +24,6 @@
     <string name="display_engine_default">Default</string>
     <string name="display_engine_mode_footer_text">Inspired by Sony\'s Bravia/X-Reality engine, the Display Engine features Vivid mode for enhanced brightness and color saturation, and X-Reality mode for improved detail and color accuracy.</string>
 
-    <!-- Private DNS -->
-    <string name="private_dns_mode_cloudflare" translatable="false">Cloudflare DNS</string>
-    <!-- Alternative: 1dot1dot1dot1.cloudflare-dns.com -->
-    <string name="private_dns_hostname_cloudflare" translatable="false">one.one.one.one</string>
-
     <!-- Advanced keyboard settings -->
     <string name="keyboard_extras_title">Extras</string>
     <string name="advanced_keyboard_settings_title">Advanced settings</string>
