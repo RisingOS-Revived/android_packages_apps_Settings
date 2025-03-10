@@ -30,6 +30,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.os.UserHandle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -43,6 +44,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.window.embedding.ActivityEmbeddingController;
 
 import com.android.settings.R;
+import android.provider.Settings;
 import com.android.settings.Utils;
 import com.android.settings.activityembedding.ActivityEmbeddingRulesController;
 import com.android.settings.activityembedding.ActivityEmbeddingUtils;
@@ -71,6 +73,8 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     private static final String SAVED_HIGHLIGHT_MIXIN = "highlight_mixin";
     private static final String PREF_KEY_SUPPORT = "top_level_support";
 
+    private int mDashBoardStyle;
+
     private boolean mIsEmbeddingActivityEnabled;
     private TopLevelHighlightMixin mHighlightMixin;
     private int mPaddingHorizontal;
@@ -94,7 +98,18 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     protected int getPreferenceScreenResId() {
-        return getPreferenceLayoutResId(getContext());
+        switch (mDashBoardStyle) {
+            case 0:
+                return R.xml.top_level_settings_v2;
+            case 1:
+                return R.xml.top_level_settings_simple;
+            case 2:
+                return R.xml.top_level_settings_expressive;
+            case 3:
+                return R.xml.top_level_settings_expressive_rising;
+            default:
+                return getPreferenceLayoutResId(getContext());
+        }
     }
 
     @Override
@@ -112,6 +127,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
         super.onAttach(context);
         HighlightableMenu.fromXml(context, getPreferenceScreenResId());
         use(SupportPreferenceController.class).setActivity(getActivity());
+        setDashboardStyle(context);
     }
 
     @Override
@@ -415,6 +431,11 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
                         ? R.xml.top_level_settings_expressive
                         : R.xml.top_level_settings_v2
                 : R.xml.top_level_settings;
+    }
+
+    private void setDashboardStyle(Context context) {
+        mDashBoardStyle = Settings.System.getIntForUser(context.getContentResolver(),
+                com.rising.settings.fragments.ui.Settings.SETTINGS_DASHBOARD_STYLE, 0, UserHandle.USER_CURRENT);
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
