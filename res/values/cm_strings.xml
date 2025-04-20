@@ -195,4 +195,7 @@
     <string name="battery_maximum_capacity">Maximum capacity</string>
     <string name="battery_maximum_capacity_summary">%1$d mAh (%2$d%%)</string>
     <string name="battery_maximum_capacity_not_available" translatable="false">@string/battery_cycle_count_not_available</string>
+
+    <!-- Doze on charge -->
+    <string name="doze_on_charge_aod_suppressed">Always show time and info when charging is enabled. AOD will only activate while charging.</string>
 </resources>

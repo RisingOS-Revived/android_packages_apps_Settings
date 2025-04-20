@@ -15,22 +15,31 @@
  */
 package com.android.settings.display;
 
+import static androidx.lifecycle.Lifecycle.Event.ON_START;
+import static androidx.lifecycle.Lifecycle.Event.ON_STOP;
+
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.ContentObserver;
 import android.hardware.display.AmbientDisplayConfiguration;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 import androidx.preference.Preference;
 
 import com.android.settings.R;
 import com.android.settings.core.TogglePreferenceController;
 
 // LINT.IfChange
-public class AmbientDisplayAlwaysOnPreferenceController extends TogglePreferenceController {
+public class AmbientDisplayAlwaysOnPreferenceController extends TogglePreferenceController implements LifecycleObserver {
 
     private final int ON = 1;
     private final int OFF = 0;
@@ -40,6 +49,20 @@ public class AmbientDisplayAlwaysOnPreferenceController extends TogglePreference
     private static final String AOD_SUPPRESSED_TOKEN = "winddown";
 
     private AmbientDisplayConfiguration mConfig;
+    
+    private static final String KEY_DOZE_ALWAYS_ON_CHARGE_MODE = "doze_always_on_charge_mode";
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
+
+    private final ContentObserver mDozeOnChargeObserver = new ContentObserver(mHandler) {
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (mPreference != null) {
+                updateState(mPreference);
+            }
+        }
+    };
+
+    private Preference mPreference;
 
     public AmbientDisplayAlwaysOnPreferenceController(Context context, String key) {
         super(context, key);
@@ -55,7 +78,16 @@ public class AmbientDisplayAlwaysOnPreferenceController extends TogglePreference
     @Override
     public void updateState(Preference preference) {
         super.updateState(preference);
-        refreshSummary(preference);
+        mPreference = preference;
+
+        boolean isSuppressed = isAodSuppressedByChargeMode();
+        preference.setEnabled(!isSuppressed);
+
+        if (isSuppressed) {
+            preference.setSummary(R.string.doze_on_charge_aod_suppressed);
+        } else {
+            refreshSummary(preference);
+        }
     }
 
     @Override
@@ -108,6 +140,23 @@ public class AmbientDisplayAlwaysOnPreferenceController extends TogglePreference
             mConfig = new AmbientDisplayConfiguration(mContext);
         }
         return mConfig;
+    }
+
+    @OnLifecycleEvent(ON_START)
+    public void onStart() {
+        mContext.getContentResolver().registerContentObserver(
+            Settings.System.getUriFor(KEY_DOZE_ALWAYS_ON_CHARGE_MODE),
+            false, mDozeOnChargeObserver);
+    }
+
+    @OnLifecycleEvent(ON_STOP)
+    public void onStop() {
+        mContext.getContentResolver().unregisterContentObserver(mDozeOnChargeObserver);
+    }
+
+    private boolean isAodSuppressedByChargeMode() {
+        return Settings.System.getInt(
+                mContext.getContentResolver(), KEY_DOZE_ALWAYS_ON_CHARGE_MODE, 0) != 0;
     }
 
     /**
