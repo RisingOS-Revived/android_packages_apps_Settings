@@ -194,4 +194,8 @@
 
     <!-- Doze on charge -->
     <string name="doze_on_charge_aod_suppressed">Always show time and info when charging is enabled. AOD will only activate while charging.</string>
+
+    <!-- HDR Display -->
+    <string name="hdr_display_title">HDR Display</string>
+    <string name="hdr_display_summary">Enable peak brightness for HDR content. This will increase battery usage</string>
 </resources>
