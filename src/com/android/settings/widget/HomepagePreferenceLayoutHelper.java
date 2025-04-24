@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.android.settings.widget;
 
 import android.view.View;
-
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
-
 import com.android.settings.R;
 import com.android.settings.flags.Flags;
 import com.android.settingslib.widget.SettingsThemeHelper;
 
 /** Helper for homepage preference to manage layout. */
 public class HomepagePreferenceLayoutHelper {
-
     private View mIcon;
     private View mText;
     private boolean mIconVisible = true;
@@ -41,12 +37,14 @@ public class HomepagePreferenceLayoutHelper {
     }
 
     public HomepagePreferenceLayoutHelper(Preference preference) {
-        preference.setLayoutResource(
-                Flags.homepageRevamp()
-                        ? SettingsThemeHelper.isExpressiveTheme(preference.getContext())
-                                ? R.layout.homepage_preference_expressive
-                                : R.layout.homepage_preference_v2
-                        : R.layout.homepage_preference);
+        if (preference != null) {
+            preference.setLayoutResource(
+                    Flags.homepageRevamp()
+                            ? SettingsThemeHelper.isExpressiveTheme(preference.getContext())
+                                    ? R.layout.homepage_preference_expressive
+                                    : R.layout.homepage_preference_v2
+                            : R.layout.homepage_preference);
+        }
     }
 
     /** Sets whether the icon should be visible */
@@ -75,11 +73,13 @@ public class HomepagePreferenceLayoutHelper {
         }
     }
 
-    void onBindViewHolder(PreferenceViewHolder holder) {
-        mIcon = holder.findViewById(R.id.icon_frame);
-        mText = holder.findViewById(R.id.text_frame);
-        setIconVisible(mIconVisible);
-        setIconPaddingStart(mIconPaddingStart);
-        setTextPaddingStart(mTextPaddingStart);
+    public void onBindViewHolder(PreferenceViewHolder holder) {
+        if (holder != null) {
+            mIcon = holder.findViewById(R.id.icon_frame);
+            mText = holder.findViewById(R.id.text_frame);
+            setIconVisible(mIconVisible);
+            setIconPaddingStart(mIconPaddingStart);
+            setTextPaddingStart(mTextPaddingStart);
+        }
     }
 }
