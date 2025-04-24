@@ -57,6 +57,7 @@ import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.support.SupportPreferenceController;
 import com.android.settings.utils.DesktopSettingsUtils;
 import com.android.settings.widget.HomepagePreference;
+import com.android.settings.widget.HomepagePreferenceLayoutHelper;
 import com.android.settings.widget.HomepagePreferenceLayoutHelper.HomepagePreferenceLayout;
 import com.android.settingslib.core.instrumentation.Instrumentable;
 import com.android.settingslib.drawer.Tile;
@@ -270,7 +271,10 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
                                 WindowManager.LARGE_SCREEN_SMALLEST_SCREEN_WIDTH_DP);
                 boolean visible = isRegularLayout || isLargeScreen;
 
-                ((HomepagePreferenceLayout) preference).getHelper().setIconVisible(visible);
+                HomepagePreferenceLayoutHelper helper = ((HomepagePreferenceLayout) preference).getHelper();
+                if (helper != null) {
+                    helper.setIconVisible(visible);
+                }
             }
         });
 

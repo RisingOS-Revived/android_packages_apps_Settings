@@ -47,10 +47,12 @@ public class HomepagePreferenceLayoutHelper {
     }
 
     public HomepagePreferenceLayoutHelper(Preference preference) {
-        preference.setLayoutResource(
+        if (preference != null) {
+            preference.setLayoutResource(
                 SettingsThemeHelper.isExpressiveTheme(preference.getContext())
                         ? R.layout.homepage_preference_expressive
                         : R.layout.homepage_preference);
+        }
     }
 
     /** Sets whether the icon should be visible */
@@ -105,15 +107,17 @@ public class HomepagePreferenceLayoutHelper {
     }
 
     void onBindViewHolder(PreferenceViewHolder holder) {
-        mIcon = holder.findViewById(R.id.icon_frame);
-        mText = holder.findViewById(R.id.text_frame);
-        mAlertFrame = holder.findViewById(R.id.alert_frame);
-        mAlertUnnumbered = holder.findViewById(R.id.alert_unnumbered);
-        mAlertNumberedFrame = holder.findViewById(R.id.alert_numbered_frame);
-        mAlertNumberText = (TextView) holder.findViewById(R.id.alert_number_fg);
-        setIconVisible(mIconVisible);
-        setIconPaddingStart(mIconPaddingStart);
-        setTextPaddingStart(mTextPaddingStart);
-        setAlert(mAlertValue);
+        if (holder != null) {
+            mIcon = holder.findViewById(R.id.icon_frame);
+            mText = holder.findViewById(R.id.text_frame);
+            mAlertFrame = holder.findViewById(R.id.alert_frame);
+            mAlertUnnumbered = holder.findViewById(R.id.alert_unnumbered);
+            mAlertNumberedFrame = holder.findViewById(R.id.alert_numbered_frame);
+            mAlertNumberText = (TextView) holder.findViewById(R.id.alert_number_fg);
+            setIconVisible(mIconVisible);
+            setIconPaddingStart(mIconPaddingStart);
+            setTextPaddingStart(mTextPaddingStart);
+            setAlert(mAlertValue);
+        }
     }
 }
