@@ -258,14 +258,14 @@
 
     <PreferenceCategory
         android:order="100"
-        android:key="top_level_support_category"
+        android:key="top_level_system_info_category"
         android:layout="@layout/settingslib_preference_category_no_title">
 
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.android.settings.system.SystemDashboardFragment"
             android:icon="@drawable/ic_custom_settings_system_dashboard_white"
             android:key="top_level_system"
-            android:order="-20"
+            android:order="20"
             android:title="@string/header_category_system"
             android:summary="@string/system_dashboard_summary"
             settings:highlightableMenuKey="@string/menu_key_system"/>
@@ -273,7 +273,7 @@
         <com.android.settings.widget.HomepagePreference
             android:icon="@drawable/ic_help_filled"
             android:key="top_level_support"
-            android:order="-10"
+            android:order="30"
             android:title="@string/page_tab_title_support"
             android:summary="@string/support_summary"
             settings:highlightableMenuKey="@string/menu_key_support"
@@ -283,7 +283,7 @@
             android:fragment="com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment"
             android:icon="@drawable/ic_custom_settings_about_device"
             android:key="top_level_about_device"
-            android:order="20"
+            android:order="40"
             android:title="@string/about_settings"
             android:summary="@string/summary_placeholder"
             settings:highlightableMenuKey="@string/menu_key_about_device"
