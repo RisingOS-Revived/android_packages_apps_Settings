@@ -202,4 +202,9 @@
     <!-- HDR Display -->
     <string name="hdr_display_title">HDR Display</string>
     <string name="hdr_display_summary">Enable peak brightness for HDR content. This will increase battery usage</string>
+
+    <!-- Comss DNS Option -->
+    <string name="private_dns_mode_comss" translatable="false">Comss DNS</string> 
+    <!-- Comss DNS hostname -->
+    <string name="private_dns_hostname_comss" translatable="false">dns.comss.one</string>
 </resources>
