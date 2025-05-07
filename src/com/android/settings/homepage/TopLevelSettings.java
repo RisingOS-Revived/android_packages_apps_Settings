@@ -81,6 +81,7 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     private boolean mScrollNeeded = true;
     private boolean mFirstStarted = true;
     private ActivityEmbeddingController mActivityEmbeddingController;
+    private boolean mIsSplitLayout = false;
 
     public TopLevelSettings() {
         final Bundle args = new Bundle();
@@ -98,6 +99,10 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
     @Override
     protected int getPreferenceScreenResId() {
+        if (mIsSplitLayout || isActivityEmbedded()) {
+            return R.xml.top_level_settings_simple;
+        }
+
         switch (mDashBoardStyle) {
             case 0:
                 return R.xml.top_level_settings_expressive_rising;
@@ -126,6 +131,8 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
         HighlightableMenu.fromXml(context, getPreferenceScreenResId());
         use(SupportPreferenceController.class).setActivity(getActivity());
         setDashboardStyle(context);
+
+        checkSplitLayoutMode();
     }
 
     @Override
@@ -185,6 +192,8 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
         if (mHighlightMixin == null) {
             mHighlightMixin = new TopLevelHighlightMixin();
         }
+
+        checkSplitLayoutMode();
     }
 
     /** Wrap ActivityEmbeddingController#isActivityEmbedded for testing. */
@@ -214,6 +223,8 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
             setHighlightMenuKey(getString(SettingsHomepageActivity.DEFAULT_HIGHLIGHT_MENU_KEY),
                     /* scrollNeeded= */ false);
         }
+
+        checkSplitLayoutMode();
     }
 
     private boolean isOnlyOneActivityInTask() {
@@ -235,6 +246,17 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         highlightPreferenceIfNeeded();
+
+        checkSplitLayoutMode();
+
+        if (mIsSplitLayout || isActivityEmbedded()) {
+            if (getPreferenceScreen() != null &&
+                    getPreferenceScreen().getPreferenceCount() > 0) {
+                setPreferenceScreen(null);
+                addPreferencesFromResource(getPreferenceScreenResId());
+                onCreatePreferences(null, null);
+            }
+        }
     }
 
     @Override
@@ -251,6 +273,27 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
                 ((HomepagePreferenceLayout) preference).getHelper().setIconVisible(visible);
             }
         });
+
+        mIsSplitLayout = !isRegularLayout;
+
+        if (getPreferenceScreen() != null &&
+                getPreferenceScreen().getPreferenceCount() > 0) {
+            setPreferenceScreen(null);
+            addPreferencesFromResource(getPreferenceScreenResId());
+            onCreatePreferences(null, null);
+        }
+    }
+
+    private void checkSplitLayoutMode() {
+        boolean wasInSplitMode = mIsSplitLayout;
+        mIsSplitLayout = isActivityEmbedded();
+
+        if (wasInSplitMode != mIsSplitLayout && getPreferenceScreen() != null &&
+                getPreferenceScreen().getPreferenceCount() > 0) {
+            setPreferenceScreen(null);
+            addPreferencesFromResource(getPreferenceScreenResId());
+            onCreatePreferences(null, null);
+        }
     }
 
     @Override
