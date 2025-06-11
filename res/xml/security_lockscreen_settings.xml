@@ -97,6 +97,13 @@
         settings:controller="com.android.settings.display.AmbientDisplayWhenToShowPreferenceController"
         android:order="1000">
 
+        <com.android.settings.preferences.SystemSettingSwitchPreference
+            android:key="screen_off_aod_enabled"
+            android:title="@string/screen_off_aod_enabled_title"
+            android:summary="@string/screen_off_aod_enabled_summary"
+            android:defaultValue="true"
+            settings:position="none" />
+
         <com.android.settingslib.RestrictedSwitchPreference
             android:key="ambient_display_always_on"
             android:title="@string/doze_always_on_title"
