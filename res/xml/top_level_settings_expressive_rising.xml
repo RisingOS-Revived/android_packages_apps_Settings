@@ -63,7 +63,7 @@
         android:layout="@layout/settingslib_preference_category_no_title">
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.rising.settings.PersonalizationsFragment"
-            android:icon="@drawable/ic_settings_cogs"
+            android:icon="@drawable/ic_homepage_personalization"
             android:key="top_level_personalizations"
             android:order="-70"
             android:title="@string/rising_settings_title"
