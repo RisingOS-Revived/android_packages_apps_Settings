@@ -427,6 +427,14 @@ public class SettingsHomepageActivity extends FragmentActivity implements
                     container.setPadding(container.getPaddingLeft(), top_padding + insets.top,
                             container.getPaddingRight(), container.getPaddingBottom());
 
+                    // For search_bar_style=0, add extra top padding to prevent overlap with status bar
+                    if (!homepageRevamp()) {
+                        // Add additional top padding to the app bar container for style 0
+                        container.setPadding(container.getPaddingLeft(), 
+                                container.getPaddingTop() + insets.top,
+                                container.getPaddingRight(), container.getPaddingBottom());
+                    }
+
                     // Return CONSUMED if you don't want the window insets to keep being
                     // passed down to descendant views.
                     return WindowInsetsCompat.CONSUMED;
@@ -470,10 +478,6 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     }
 
     private void updateHomepageBackground() {
-        if (!homepageRevamp() && !mIsEmbeddingActivityEnabled) {
-            return;
-        }
-
         final Window window = getWindow();
         final int color = mIsTwoPane
                 ? getColor(R.color.settings_two_pane_background_color)
@@ -777,17 +781,32 @@ public class SettingsHomepageActivity extends FragmentActivity implements
 
     private void initHomepageContainer() {
         final View view = findViewById(R.id.homepage_container);
-        // Prevent inner RecyclerView gets focus and invokes scrolling.
         view.setFocusableInTouchMode(true);
         view.requestFocus();
 
         if (Flags.extendedScreenshotsExcludeNestedScrollables()) {
-            // Force scroll capture to select the NestedScrollView, instead of the non-scrollable
-            // RecyclerView which is contained inside it with no height constraint.
             final View scrollableContainer = findViewById(R.id.main_content_scrollable_container);
             if (scrollableContainer != null) {
                 scrollableContainer.setScrollCaptureHint(
                         View.SCROLL_CAPTURE_HINT_EXCLUDE_DESCENDANTS);
+            }
+        }
+
+        if (!homepageRevamp()) {
+            final View scrollableContainer = findViewById(R.id.main_content_scrollable_container);
+            if (scrollableContainer != null) {
+                scrollableContainer.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                    View appBarContainer = findViewById(R.id.app_bar_container);
+                    if (appBarContainer != null) {
+                        if (scrollY == 0) {
+                            appBarContainer.animate().translationY(0).setDuration(200);
+                        } else if (scrollY > oldScrollY && scrollY > 50) {
+                            appBarContainer.animate().translationY(-appBarContainer.getHeight()).setDuration(200);
+                        } else if (scrollY < oldScrollY && Math.abs(scrollY - oldScrollY) > 10) {
+                            appBarContainer.animate().translationY(0).setDuration(200);
+                        }
+                    }
+                });
             }
         }
     }
