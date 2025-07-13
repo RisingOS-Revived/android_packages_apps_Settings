@@ -268,7 +268,7 @@
 
     <PreferenceCategory
         android:order="100"
-        android:key="top_level_system_info_category"
+        android:key="top_level_support_category"
         android:layout="@layout/settingslib_preference_category_no_title">
 
         <com.android.settings.widget.HomepagePreference
@@ -300,5 +300,12 @@
             settings:controller="com.android.settings.deviceinfo.aboutphone.TopLevelAboutDevicePreferenceController"/>
 
     </PreferenceCategory>
+
+    <com.android.settings.preferences.HiddenPreferenceCategory
+        android:order="150"
+        android:key="top_level_system_info_category"
+        android:layout="@layout/settingslib_preference_category_no_title">
+
+    </com.android.settings.preferences.HiddenPreferenceCategory>
 
 </PreferenceScreen>
