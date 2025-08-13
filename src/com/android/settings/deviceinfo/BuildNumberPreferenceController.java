@@ -72,7 +72,7 @@ public class BuildNumberPreferenceController extends BasePreferenceController im
     private boolean mProcessingLastDevHit;
 
     public final static java.lang.String[] insults = {
-            "Evolution X > your personality",
+            "Fake Rising?",
             "IT'S CLOBBERING TIME!",
             "Acknowledge me",
             "You flash ROMs more than you shower",
@@ -99,6 +99,36 @@ public class BuildNumberPreferenceController extends BasePreferenceController im
             "Go back to your stock ROM",
             "FBI! OPEN UP!",
             "Would you prefer iOS next time?",
+            "Your kernel has more bugs than your life",
+            "Installing updates like you have a social life—oh wait",
+            "Your device crashes more than your dating app",
+            "Keep flashing, maybe you'll level up in life",
+            "ROMs over hygiene, classic choice",
+            "Maybe try turning yourself off and on?",
+            "Your phone is custom, your life is generic",
+            "Did you mean to brick it or was that intentional?",
+            "Error 404: Personality not found",
+            "Stop chasing updates, start chasing goals",
+            "Even your battery dies faster than your motivation",
+            "Keep flashing, the world isn’t watching",
+            "You're living in beta, not just your ROM",
+            "Custom recovery, zero self-recovery",
+            "Your device is rooted, your life is not",
+            "Do you even backup your friends?",
+            "Nice try, still a noob",
+            "Your phone has more features than your conversation",
+            "Step away from the flashing tool, human",
+            "ROMs don't fix existential crises",
+            "Congratulations! You just bricked your confidence",
+            "Your Wi-Fi is strong, your willpower is weak",
+            "Keep flashing, maybe one day you'll flash some ambition",
+            "Your device has more personalities than you do",
+            "Stop tweaking, start thinking",
+            "Who needs stability when you can have chaos?",
+            "Your phone is faster than your life choices",
+            "Even AOSP is judging you right now",
+            "Flash responsibly… unlike your decisions",
+            "Your notifications are louder than your achievements"
     };
 
     public BuildNumberPreferenceController(Context context, String key) {
