@@ -842,7 +842,7 @@
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:exported="true"
                 android:clearTaskOnLaunch="true"
-                android:theme="@style/Theme.SubSettingsBase">
+                android:theme="@style/Theme.SubSettingsBase.Expressive">
             <intent-filter>
                 <action android:name="android.bluetooth.devicepicker.action.LAUNCH" />
                 <category android:name="android.intent.category.DEFAULT" />
