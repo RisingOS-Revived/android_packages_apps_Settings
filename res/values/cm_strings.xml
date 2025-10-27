@@ -230,4 +230,7 @@
 
     <!-- Battery Saver -->
     <string name="battery_saver_refresh_rate_disabled_summary">Extreme refresh rate is on</string>
+
+    <!-- eSIM settings -->
+    <string name="esim_settings_title">eSIM settings</string>
 </resources>
