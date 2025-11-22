@@ -17,6 +17,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/search_bar_margin"
@@ -24,19 +25,19 @@
     android:layout_marginStart="@dimen/card_highlight_margin_start"
     android:layout_marginEnd="@dimen/card_highlight_margin_end">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/search_bar"
-        style="@style/SearchBarStyle"
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/search_bar_blur"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginEnd="8dp">
+        android:layout_weight="0.8"
+        android:layout_marginEnd="8dp"
+        app:blurOverlayColor="#66FFFFFF">
         <Toolbar
             android:id="@+id/search_action_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/custom_avatar_length"
             android:paddingStart="@dimen/search_bar_padding_start"
-            android:background="@drawable/search_bar_selected_background"
+            android:background="@android:color/transparent"
             android:touchscreenBlocksFocus="false"
             android:nextFocusForward="@+id/homepage_container"
             android:contentInsetStartWithNavigation="@dimen/search_bar_content_inset">
@@ -59,5 +60,5 @@
                 android:textColor="@color/top_level_preference_text_color_primary"
                 android:text="@string/search_homepage"/>
         </Toolbar>
-    </com.google.android.material.card.MaterialCardView>
+    </eightbitlab.com.blurview.BlurView>
 </LinearLayout>
