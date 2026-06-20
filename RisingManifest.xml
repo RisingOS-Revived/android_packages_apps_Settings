@@ -162,7 +162,7 @@
         
         <!-- DW -->
         <activity android:name="Settings$PersonalizationsDWActivity"
-                  android:label="@string/dw_wallpaper_enabled_title"
+                  android:label="@string/depthwall_wallpaper_enabled_title"
                   android:icon="@drawable/ic_color_bucket"
                   android:exported="true">
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"

@@ -78,6 +78,9 @@ android_library {
         "res-product",
         "Personalizations/res",
     ],
+
+    asset_dirs: ["Personalizations/assets"],
+
     optional_uses_libs: ["com.android.extensions.appfunctions"],
 
     static_libs: [
@@ -150,6 +153,10 @@ android_library {
 
         // Rising dependencies
         "blurview",
+        "tensorflowlite_java",
+        "tflite_support_java",
+        "tensorflow-lite-gpu",
+        "tensorflow-lite-gpu-api",
 
         // Axion dependencies
         "ax_compose",
@@ -241,6 +248,14 @@ android_app {
     resource_dirs: [],
     flags_packages: [
         "android.app.flags-aconfig",
+    ],
+    use_embedded_native_libs: true,
+    jni_libs: [
+        "libtensorflowlite_jni",
+        "libtensorflowlite_gpu_jni",
+    ],
+    aaptflags: [
+        "-0 .tflite",
     ],
 }
 
