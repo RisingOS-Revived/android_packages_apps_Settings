@@ -189,4 +189,8 @@
     <string name="face_enrolling_close_to_continue">Fold phone during setup</string>
     <string name="face_enrolling_close_to_continue_description">The phone must be folded to set up or use Face Unlock</string>
     <string name="face_enrolling_do_it_later">Do it later</string>
+
+    <!-- backup -->
+    <string name="local_app_backup_restore_title">Local app backup and restore</string>
+    <string name="local_app_backup_restore_summary">Save APKs and app data as normal tar archives in internal storage</string>
 </resources>
