@@ -367,7 +367,7 @@ public class FaceEnrollEducation extends BiometricEnrollBase {
             ComponentName componentName = ComponentName.unflattenFromString(flattenedString);
             intent.setComponent(componentName);
         } else {
-            intent.setClass(this, FaceEnrollEnrolling.class);
+            intent.setClass(this, com.google.android.settings.biometrics.face.FaceEnrollActivityDirector.class);
         }
         WizardManagerHelper.copyWizardManagerExtras(getIntent(), intent);
         if (mResultIntent != null) {
