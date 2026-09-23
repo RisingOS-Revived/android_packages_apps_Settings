@@ -192,4 +192,12 @@
     <!-- Show clipboard overlay -->
     <string name="show_clipboard_overlay_title">Show clipboard overlay</string>
     <string name="show_clipboard_overlay_summary">Show an overlay in the left bottom corner of the screen when something is copied to the clipboard</string>
+
+    <!-- Custom Wi-Fi MAC address -->
+    <string name="wifi_custom_mac_title">Custom Wi-Fi MAC address</string>
+    <string name="wifi_custom_mac_dialog_title">Custom Wi-Fi MAC address</string>
+    <string name="wifi_custom_mac_dialog_message">Applies to all networks without their own custom MAC. Leave empty to use the default behavior. Example: 02:11:22:33:44:55</string>
+    <string name="wifi_custom_mac_category_title">Custom MAC address</string>
+    <string name="wifi_custom_mac_supporting">Leave empty to use the setting above. Applies on next connection.</string>
+    <string name="wifi_custom_mac_error">Invalid MAC: must be unicast, non-zero (aa:bb:cc:dd:ee:ff).</string>
 </resources>
