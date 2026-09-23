@@ -21,7 +21,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.net.MacAddress;
 import android.os.UserManager;
+import android.provider.Settings;
+import android.text.TextUtils;
+import android.widget.Toast;
 import android.util.EventLog;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +34,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 
 import com.android.settings.R;
@@ -91,6 +96,44 @@ public class ConfigureWifiSettings extends DashboardFragment {
         } else {
             Log.d(TAG, "Can not find the preference.");
         }
+        setupCustomMacPreference();
+    }
+
+    private static final String KEY_CUSTOM_WIFI_MAC = "custom_wifi_mac";
+
+    private void setupCustomMacPreference() {
+        final EditTextPreference pref = findPreference(KEY_CUSTOM_WIFI_MAC);
+        if (pref == null) return;
+        final Context context = getContext();
+        final String current = Settings.Global.getString(
+                context.getContentResolver(), KEY_CUSTOM_WIFI_MAC);
+        pref.setText(current);
+        pref.setSummary(TextUtils.isEmpty(current) ? "Off" : current);
+        pref.setOnPreferenceChangeListener((preference, newValue) -> {
+            final String value = newValue == null ? "" : ((String) newValue).trim();
+            if (!value.isEmpty()) {
+                try {
+                    final byte[] b = MacAddress.fromString(value).toByteArray();
+                    final boolean isMulticast = (b[0] & 0x01) != 0; // also covers broadcast
+                    boolean isAllZero = true;
+                    for (byte x : b) {
+                        if (x != 0) isAllZero = false;
+                    }
+                    final boolean isReserved = b[0] == 2 && b[1] == 0 && b[2] == 0
+                            && b[3] == 0 && b[4] == 0 && b[5] == 0; // 02:00:00:00:00:00
+                    if (isMulticast || isAllZero || isReserved) {
+                        throw new IllegalArgumentException("not a usable unicast MAC");
+                    }
+                } catch (IllegalArgumentException e) {
+                    Toast.makeText(context, "Invalid MAC address", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+            Settings.Global.putString(context.getContentResolver(), KEY_CUSTOM_WIFI_MAC,
+                    value.isEmpty() ? null : value);
+            pref.setSummary(value.isEmpty() ? "Off" : value);
+            return true;
+        });
     }
 
     @Override
