@@ -124,7 +124,8 @@ public abstract class ConfirmDeviceCredentialBaseFragment extends InstrumentedFr
 
     private boolean isInternalActivity() {
         return (getActivity() instanceof ConfirmLockPassword.InternalActivity)
-                || (getActivity() instanceof ConfirmLockPattern.InternalActivity);
+                || (getActivity() instanceof ConfirmLockPattern.InternalActivity)
+                || (getActivity() instanceof ConfirmLockKnockCode.InternalActivity);
     }
 
     @Override

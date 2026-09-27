@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+**
+** Copyright (C) 2026 RisingOS (revived) Android Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License")
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="unlock_set_unlock_knock_code_title">Knock Code</string>
+    <string name="knock_code_create_header">Create a Knock Code</string>
+    <string name="knock_code_create_hint">Tap 4 to 8 times anywhere in the square, then tap Continue.</string>
+    <string name="knock_code_confirm_header">Confirm your Knock Code</string>
+    <string name="knock_code_confirm_hint">Tap the same sequence again.</string>
+    <string name="knock_code_mismatch">The two Knock Codes did not match. Try again.</string>
+    <string name="knock_code_confirm_existing_header">Confirm your Knock Code</string>
+    <string name="knock_code_confirm_existing_details">Your Knock Code verifies it\'s you</string>
+    <string name="knock_code_wrong">Wrong Knock Code. Try again.</string>
+    <string name="knock_code_too_many_failed_attempts">Too many incorrect attempts. Try again in <xliff:g id="number">%d</xliff:g> seconds.</string>
+    <string name="knock_code_too_short">Your Knock Code must be at least <xliff:g id="count">%1$d</xliff:g> taps long.</string>
+    <string name="knock_code_continue">Continue</string>
+    <string name="knock_code_confirm_button">Confirm</string>
+    <string name="knock_code_grid_size_label">%1$d × %2$d</string>
+    <string name="knock_code_grid_size_label_2">2 × 2</string>
+    <string name="knock_code_grid_size_label_3">3 × 3</string>
+    <string name="knock_code_grid_size_label_4">4 × 4</string>
+    <string name="knock_code_grid_changed">Grid changed. Create your Knock Code on the new grid.</string>
+    <string name="knock_code_current_summary">Current screen lock · %1$s, <xliff:g id="count">%2$d</xliff:g> taps</string>
+    <string name="knock_code_pad_description">Knock Code tap area</string>
+    <string name="knock_code_taps"><xliff:g id="count" example="3">%1$d</xliff:g> taps entered</string>
+</resources>
