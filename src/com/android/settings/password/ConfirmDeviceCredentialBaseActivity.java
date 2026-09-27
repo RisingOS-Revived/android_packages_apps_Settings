@@ -54,7 +54,8 @@ public abstract class ConfirmDeviceCredentialBaseActivity extends SettingsActivi
 
     private boolean isInternalActivity() {
         return (this instanceof ConfirmLockPassword.InternalActivity)
-                || (this instanceof ConfirmLockPattern.InternalActivity);
+                || (this instanceof ConfirmLockPattern.InternalActivity)
+                || (this instanceof ConfirmLockKnockCode.InternalActivity);
     }
 
     @Override

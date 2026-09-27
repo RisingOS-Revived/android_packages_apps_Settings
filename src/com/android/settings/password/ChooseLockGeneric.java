@@ -143,6 +143,7 @@ public class ChooseLockGeneric extends SettingsActivity {
         private static final String KEY_SKIP_FINGERPRINT = "unlock_skip_fingerprint";
         private static final String KEY_SKIP_FACE = "unlock_skip_face";
         private static final String KEY_SKIP_BIOMETRICS = "unlock_skip_biometrics";
+        private static final String KEY_UNLOCK_SET_KNOCK_CODE = "unlock_set_knock_code";
         private static final String PASSWORD_CONFIRMED = "password_confirmed";
         private static final String WAITING_FOR_CONFIRMATION = "waiting_for_confirmation";
         public static final String HIDE_INSECURE_OPTIONS = "hide_insecure_options";
@@ -237,6 +238,8 @@ public class ChooseLockGeneric extends SettingsActivity {
 
         private final ArrayList<AbstractPreferenceController> mUnlockSettingsControllers =
                 new ArrayList<>();
+
+        private boolean mLaunchKnockCodeEnrollment;
 
         @Override
         public int getMetricsCategory() {
@@ -841,7 +844,14 @@ public class ChooseLockGeneric extends SettingsActivity {
             String currentKey = getKeyForCurrent();
             Preference preference = findPreference(currentKey);
             if (preference != null) {
-                preference.setSummary(R.string.current_screen_lock);
+                if (KEY_UNLOCK_SET_KNOCK_CODE.equals(currentKey)) {
+                    final int gridSize = mLockPatternUtils.getKnockCodeGridSize(mUserId);
+                    preference.setSummary(getString(R.string.knock_code_current_summary,
+                            getString(R.string.knock_code_grid_size_label, gridSize, gridSize),
+                            mLockPatternUtils.getKnockCodeLength(mUserId)));
+                } else {
+                    preference.setSummary(R.string.current_screen_lock);
+                }
             }
         }
 
@@ -854,6 +864,10 @@ public class ChooseLockGeneric extends SettingsActivity {
             ScreenLockType lock =
                     ScreenLockType.fromQuality(
                             mLockPatternUtils.getKeyguardStoredPasswordQuality(credentialOwner));
+            if (lock == ScreenLockType.PIN
+                    && mLockPatternUtils.isKnockCodeEnabled(credentialOwner)) {
+                return KEY_UNLOCK_SET_KNOCK_CODE;
+            }
             return lock != null ? lock.preferenceKey : null;
         }
 
@@ -880,6 +894,13 @@ public class ChooseLockGeneric extends SettingsActivity {
                     }
                 }
             }
+
+            final Preference knockCode = findPreference(KEY_UNLOCK_SET_KNOCK_CODE);
+            if (knockCode != null
+                    && (!mController.isScreenLockVisible(ScreenLockType.PIN)
+                            || !mController.isScreenLockEnabled(ScreenLockType.PIN))) {
+                entries.removePreference(knockCode);
+            }
         }
 
         protected Intent getLockManagedPasswordIntent(LockscreenCredential password) {
@@ -904,6 +925,20 @@ public class ChooseLockGeneric extends SettingsActivity {
                                 ChooseLockPassword.EXTRA_KEY_FOR_SUPERVISION_RESET,
                                 false));
             }
+            if (mUserPassword != null) {
+                builder.setPassword(mUserPassword);
+            }
+            if (mUnificationProfileId != UserHandle.USER_NULL) {
+                builder.setProfileToUnify(mUnificationProfileId, mUnificationProfileCredential);
+            }
+            return builder.build();
+        }
+
+        protected Intent getLockKnockCodeIntent(int quality) {
+            ChooseLockKnockCode.IntentBuilder builder =
+                    new ChooseLockKnockCode.IntentBuilder(getContext())
+                            .setUserId(mUserId)
+                            .setRequestGatekeeperPasswordHandle(mRequestGatekeeperPasswordHandle);
             if (mUserPassword != null) {
                 builder.setPassword(mUserPassword);
             }
@@ -988,11 +1023,18 @@ public class ChooseLockGeneric extends SettingsActivity {
         }
 
         private Intent getIntentForUnlockMethod(int quality) {
+            final boolean knockCodeRequested = mLaunchKnockCodeEnrollment;
+            mLaunchKnockCodeEnrollment = false;
+
             Intent intent = null;
             if (quality >= DevicePolicyManager.PASSWORD_QUALITY_MANAGED) {
                 intent = getLockManagedPasswordIntent(mUserPassword);
-            } else if (quality >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
+            } else if (quality >= DevicePolicyManager.PASSWORD_QUALITY_ALPHABETIC) {
                 intent = getLockPasswordIntent(quality);
+            } else if (quality >= DevicePolicyManager.PASSWORD_QUALITY_NUMERIC) {
+                intent = knockCodeRequested
+                        ? getLockKnockCodeIntent(quality)
+                        : getLockPasswordIntent(quality);
             } else if (quality == DevicePolicyManager.PASSWORD_QUALITY_SOMETHING) {
                 intent = getLockPatternIntent();
             }
@@ -1151,6 +1193,15 @@ public class ChooseLockGeneric extends SettingsActivity {
 
         private boolean setUnlockMethod(String unlockMethod) {
             EventLog.writeEvent(EventLogTags.LOCK_SCREEN_TYPE, unlockMethod);
+
+            if (KEY_UNLOCK_SET_KNOCK_CODE.equals(unlockMethod)) {
+                mLaunchKnockCodeEnrollment = true;
+                updateUnlockMethodAndFinish(
+                        DevicePolicyManager.PASSWORD_QUALITY_NUMERIC,
+                        false /* disabled */,
+                        false /* chooseLockSkipped */);
+                return true;
+            }
 
             ScreenLockType lock = ScreenLockType.fromKey(unlockMethod);
             if (lock != null) {

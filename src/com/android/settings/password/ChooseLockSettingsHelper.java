@@ -555,6 +555,15 @@ public final class ChooseLockSettingsHelper {
         switch (lockType) {
             case KeyguardManager.PASSWORD:
             case KeyguardManager.PIN:
+                if (lockType == KeyguardManager.PIN
+                        && remoteLockscreenValidationSession == null
+                        && userId != LockPatternUtils.USER_FRP
+                        && mLockPatternUtils.isKnockCodeEnabled(UserManager.get(mActivity)
+                                .getCredentialOwnerProfile(userId))) {
+                    return Optional.of(returnCredentials || forceVerifyPath
+                            ? ConfirmLockKnockCode.InternalActivity.class
+                            : ConfirmLockKnockCode.class);
+                }
                 return Optional.of(returnCredentials || forceVerifyPath
                         ? ConfirmLockPassword.InternalActivity.class
                         : ConfirmLockPassword.class);
