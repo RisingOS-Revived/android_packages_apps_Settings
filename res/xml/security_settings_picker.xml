@@ -43,6 +43,12 @@
             android:persistent="false"/>
 
     <com.android.settingslib.RestrictedPreference
+            android:key="unlock_set_knock_code"
+            android:title="@string/unlock_set_unlock_knock_code_title"
+            android:icon="@drawable/ic_knock_code"
+            android:persistent="false"/>
+
+    <com.android.settingslib.RestrictedPreference
             android:key="unlock_set_password"
             android:title="@string/unlock_set_unlock_password_title"
             android:icon="@drawable/ic_password"

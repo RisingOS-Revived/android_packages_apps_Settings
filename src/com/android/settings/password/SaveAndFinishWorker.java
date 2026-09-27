@@ -56,6 +56,8 @@ public class SaveAndFinishWorker extends Fragment {
     private LockscreenCredential mCurrentCredential;
     private byte mPatternSize;
 
+    private boolean mSaveSucceeded;
+
     private boolean mBlocking;
 
     @Override
@@ -86,6 +88,7 @@ public class SaveAndFinishWorker extends Fragment {
         mWasSecureBefore = mUtils.isSecure(mUserId);
         mFinished = false;
         mResultData = null;
+        mSaveSucceeded = false;
 
         mChosenCredential = chosenCredential;
         mCurrentCredential = currentCredential != null ? currentCredential
@@ -96,10 +99,15 @@ public class SaveAndFinishWorker extends Fragment {
             LockscreenCredential currentCredential, int userId, byte patternSize) {
         prepare(utils, chosenCredential, currentCredential, userId, patternSize);
         if (mBlocking) {
-            finish(saveAndVerifyInBackground().second);
+            final Pair<Boolean, Intent> result = saveAndVerifyInBackground();
+            finish(result.first, result.second);
         } else {
             new Task().execute();
         }
+    }
+
+    public boolean wasSaveSuccessful() {
+        return mSaveSucceeded;
     }
 
     /**
@@ -158,8 +166,9 @@ public class SaveAndFinishWorker extends Fragment {
         return Pair.create(true, result);
     }
 
-    private void finish(Intent resultData) {
+    private void finish(boolean saveSucceeded, Intent resultData) {
         mFinished = true;
+        mSaveSucceeded = saveSucceeded;
         mResultData = resultData;
         if (mListener != null) {
             mListener.onChosenLockSaveFinished(mWasSecureBefore, mResultData);
@@ -212,7 +221,7 @@ public class SaveAndFinishWorker extends Fragment {
                 Toast.makeText(getContext(), R.string.lockpassword_credential_changed,
                         Toast.LENGTH_LONG).show();
             }
-            finish(resultData.second);
+            finish(resultData.first, resultData.second);
         }
     }
 
