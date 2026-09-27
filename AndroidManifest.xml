@@ -3152,6 +3152,9 @@
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/GlifTheme.Light"/>
 
+        <activity android:name=".password.ConfirmLockKnockCode"
+            android:theme="@style/GlifTheme.Light"/>
+
         <activity android:name=".password.ForgotPasswordActivity"
             android:theme="@style/GlifV3Theme.DayNight"
             android:exported="false"/>
@@ -3338,6 +3341,12 @@
             android:enableOnBackInvokedCallback="false"
             android:theme="@style/GlifTheme.Light"/>
 
+        <!-- Note this must not be exported since it returns the password in the intent -->
+        <activity android:name=".password.ConfirmLockKnockCode$InternalActivity"
+            android:exported="false"
+            android:enableOnBackInvokedCallback="false"
+            android:theme="@style/GlifTheme.Light"/>
+
         <activity android:name=".password.SetupChooseLockGeneric"
             android:theme="@style/GlifTheme.Light"
             android:exported="true"
@@ -3438,6 +3447,11 @@
             android:theme="@style/GlifTheme.Light"
             android:enableOnBackInvokedCallback="false"
             android:windowSoftInputMode="stateVisible|adjustResize"/>
+
+        <activity android:name=".password.ChooseLockKnockCode"
+            android:exported="false"
+            android:theme="@style/GlifTheme.Light"
+            android:enableOnBackInvokedCallback="false"/>
 
         <activity
             android:name=".Settings$StorageDashboardActivity"
