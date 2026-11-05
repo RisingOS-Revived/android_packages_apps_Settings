@@ -214,4 +214,10 @@
     <string name="bluetooth_details_audio_codec_title">Audio codec</string>
     <!-- Summary shown when the audio codec of a paired device cannot be read or chosen. [CHAR LIMIT=40] -->
     <string name="bluetooth_details_audio_codec_unavailable">Not available</string>
+
+    <!-- Battery saver dark theme -->
+    <string name="battery_saver_dark_theme_title">Turn on with Battery Saver</string>
+    <string name="battery_saver_dark_theme_summary">Dark theme turns on and stays on while Battery Saver is on. Saves the most battery on OLED screens.</string>
+    <!-- Not shown in the UI; describes the preference for the settings API -->
+    <string name="battery_saver_dark_theme_purpose">Controls whether Battery Saver turns on dark theme and prevents changing it until Battery Saver turns off.</string>
 </resources>
