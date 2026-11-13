@@ -220,4 +220,20 @@
     <string name="battery_saver_dark_theme_summary">Dark theme turns on and stays on while Battery Saver is on. Saves the most battery on OLED screens.</string>
     <!-- Not shown in the UI; describes the preference for the settings API -->
     <string name="battery_saver_dark_theme_purpose">Controls whether Battery Saver turns on dark theme and prevents changing it until Battery Saver turns off.</string>
+
+    <!-- Battery health: derived from maximum capacity vs. design capacity -->
+    <string name="battery_health_normal">Normal</string>
+    <string name="battery_health_needs_replacement">Needs Replacement</string>
+
+    <!-- Battery temperature status. [CHAR LIMIT=30] -->
+    <string name="battery_temperature_cold">Cold</string>
+    <string name="battery_temperature_hot">Hot</string>
+    <string name="battery_temperature_normal">Normal Temperature</string>
+    <string name="battery_temperature_summary">%1$s (%2$s)</string>
+
+    <!-- Battery voltage status. [CHAR LIMIT=30] -->
+    <string name="battery_voltage_over">Overvoltage</string>
+    <string name="battery_voltage_under">Undervoltage</string>
+    <string name="battery_voltage_normal">Normal Voltage</string>
+    <string name="battery_voltage_summary">%1$s (%2$s)</string>
 </resources>

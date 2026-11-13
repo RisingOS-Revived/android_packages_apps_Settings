@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024 Paranoid Android
+ * Copyright (C) 2026 RisingOS (revived) Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +35,9 @@ import java.util.Locale;
  */
 public class BatteryTemperaturePreferenceController extends BasePreferenceController {
 
+    private static final float COLD_THRESHOLD_CELSIUS = 10f;
+    private static final float HOT_THRESHOLD_CELSIUS = 45f;
+
     public BatteryTemperaturePreferenceController(Context context, String preferenceKey) {
         super(context, preferenceKey);
     }
@@ -52,8 +56,19 @@ public class BatteryTemperaturePreferenceController extends BasePreferenceContro
         if (temperatureTenths > 0) {
             float temperature = temperatureTenths / 10f;
 
-            return MeasureFormat.getInstance(Locale.getDefault(), MeasureFormat.FormatWidth.SHORT)
+            final String value = MeasureFormat.getInstance(
+                            Locale.getDefault(), MeasureFormat.FormatWidth.SHORT)
                     .format(new Measure(temperature, MeasureUnit.CELSIUS));
+            final int statusRes;
+            if (temperature < COLD_THRESHOLD_CELSIUS) {
+                statusRes = R.string.battery_temperature_cold;
+            } else if (temperature > HOT_THRESHOLD_CELSIUS) {
+                statusRes = R.string.battery_temperature_hot;
+            } else {
+                statusRes = R.string.battery_temperature_normal;
+            }
+            return mContext.getString(R.string.battery_temperature_summary,
+                    mContext.getString(statusRes), value);
         }
 
         return mContext.getText(R.string.battery_temperature_not_available);

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2024 Paranoid Android
+ * Copyright (C) 2026 RisingOS (revived) Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +35,9 @@ import java.util.Locale;
  */
 public class BatteryVoltagePreferenceController extends BasePreferenceController {
 
+    private static final int UNDER_VOLTAGE_THRESHOLD_MV = 3300;
+    private static final int OVER_VOLTAGE_THRESHOLD_MV = 4500;
+
     public BatteryVoltagePreferenceController(Context context, String preferenceKey) {
         super(context, preferenceKey);
     }
@@ -51,8 +55,19 @@ public class BatteryVoltagePreferenceController extends BasePreferenceController
         if (voltageMillivolts > 0) {
             float voltage = voltageMillivolts / 1_000f;
 
-            return MeasureFormat.getInstance(Locale.getDefault(), MeasureFormat.FormatWidth.SHORT)
+            final String value = MeasureFormat.getInstance(
+                            Locale.getDefault(), MeasureFormat.FormatWidth.SHORT)
                     .format(new Measure(voltage, MeasureUnit.VOLT));
+            final int statusRes;
+            if (voltageMillivolts < UNDER_VOLTAGE_THRESHOLD_MV) {
+                statusRes = R.string.battery_voltage_under;
+            } else if (voltageMillivolts > OVER_VOLTAGE_THRESHOLD_MV) {
+                statusRes = R.string.battery_voltage_over;
+            } else {
+                statusRes = R.string.battery_voltage_normal;
+            }
+            return mContext.getString(R.string.battery_voltage_summary,
+                    mContext.getString(statusRes), value);
         }
 
         return mContext.getText(R.string.battery_voltage_not_available);
